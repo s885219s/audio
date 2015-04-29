@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Web Audio API</title>
+<link href="index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <p class="play">Play</p>
+  <p class="stop">Stop</p>
+  <p class="mic">mic</p>
+  <script src="lib/minivents.min.js"></script>
+  <script src="lib/jquery-1.9.1.min.js"></script>
+  <script src='lib/stats.min.js'></script>
+  <script src='lib/dat.gui.min.js'></script>
+  <script src="lib/atutil.js"></script>
+  <script language="JavaScript" src="audio.js"></script>
+  <script language="JavaScript" src="three.js-master/build/three.js"></script>
+  <!--<script language="JavaScript" src="three.js"></script>
+  <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        var geometry = new THREE.CubeGeometry(2,2,2);
+        var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+        var cube = new THREE.Mesh(geometry, material); scene.add(cube);
+        camera.position.z = 5;
+        function render() {
+          requestAnimationFrame(render);
+            cube.rotation.x += 0.1;
+            cube.rotation.y += 0.1;
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>-->
+<!--<audio controls>
+  <source src="horse.ogg" type="audio/ogg">
+  <source src="mp3/Immortals.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>-->
+<!--
+<audio id="player" src="mp3/Immortals.mp3"></audio>
+<div>
+<button onclick="document.getElementById('player').play()">Play</button>
+<button onclick="document.getElementById('player').pause()">Pause</button>
+<button onclick="document.getElementById('player').volume += 0.1">Vol+ </button>
+<button onclick="document.getElementById('player').volume -= 0.1">Vol- </button>
+</div>
+-->
+</body>
+</html>
