@@ -68,10 +68,6 @@ $.getScript("three.js-master/build/three.js",function() {
         request.send();
       }
     }
-    document.querySelector('.play').addEventListener('click', startSound);
-    document.querySelector('.stop').addEventListener('click', stopSound);
-    document.querySelector('.mic').addEventListener('click', getMicInput);
-
     function playSound() {
         // play the source now
         if(play==false){
@@ -89,6 +85,10 @@ $.getScript("three.js-master/build/three.js",function() {
         source.noteOff(context.currentTime);
       }
     }
+    document.querySelector('.play').addEventListener('click', startSound);
+    document.querySelector('.stop').addEventListener('click', stopSound);
+    document.querySelector('.mic').addEventListener('click', getMicInput);
+
     function audioGraph(audioData){
         source = context.createBufferSource();
         source.connect(analyser);
