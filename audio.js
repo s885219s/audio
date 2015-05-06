@@ -33,8 +33,10 @@ $.getScript("three.js-master/build/three.js",function() {
     function init() {
         if (typeof AudioContext !== "undefined") {
             context = new AudioContext();
+            console.log("fuck");
         } else if (typeof webkitAudioContext !== "undefined") {
             context = new webkitAudioContext();
+            console.log("shit");
         } else {
             throw new Error('AudioContext not supported. :(');
         }
