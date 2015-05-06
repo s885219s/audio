@@ -38,7 +38,7 @@ $.getScript("three.js-master/build/three.js",function() {
             context = new webkitAudioContext();
             console.log("shit");
         } else {
-            throw new Error('AudioContext not supported. :('');
+            throw new Error('AudioContext not supported. :(');
         }
 
         analyser = context.createAnalyser();
