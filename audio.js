@@ -10,6 +10,11 @@ $.getScript("three.js-master/build/three.js",function() {
     var ffreqByteData;
     var bfreqByteData;
     var timeByteData;
+    var levelsData = [];
+    var BEAT_MIN=0.15;
+    var beatCutOff=0;
+    var beatTime=0;
+    var levelsCount=16;
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     var renderer = new THREE.WebGLRenderer();
@@ -35,7 +40,8 @@ $.getScript("three.js-master/build/three.js",function() {
         }
         analyser = context.createAnalyser();
         analyser.connect(context.destination);
-        binCount = analyser.frequencyBinCount;
+        binCount = analyser.frequencyBinCount;//512
+        levelBins = Math.floor(binCount / levelsCount); //number of bins in each level
         ffreqByteData = new Float32Array(binCount);
     		bfreqByteData = new Uint8Array(binCount);
         timeByteData = new Uint8Array(binCount);
@@ -125,19 +131,42 @@ $.getScript("three.js-master/build/three.js",function() {
       if (!play) return;
       analyser.getByteFrequencyData(bfreqByteData);
       analyser.getByteTimeDomainData(timeByteData);
-      var sum=0;
-      for(var i=0;i<binCount;i++){
-      sum+=bfreqByteData[i];
-      }
-      level=sum/binCount;
-    //  console.log(level);
+      for(var i = 0; i < levelsCount; i++) {
+  			var sum = 0;
+  			for(var j = 0; j < levelBins; j++) {
+  				sum += bfreqByteData[(i * levelBins) + j];
+  			}
+  			levelsData[i] = sum / levelBins/256;
+  		}
+      var sum = 0;
+  		for(var j = 0; j < levelsCount; j++) {
+  			sum += levelsData[j];
+  		}
+
+  		level = sum / levelsCount;
+      if (level  > beatCutOff && level > BEAT_MIN){
+        //console.log(level);
+        cube.material.color.setHex(0xff0000);
+        beatCutOff = level *1.1;
+  			beatTime = 0;
+  		}else{
+        //console.log("fuck you");
+        cube.material.color.setHex(0xffffff);
+  			if (beatTime <= 40){
+  				beatTime ++;
+  			}else{
+  				beatCutOff *= 0.98;
+  				beatCutOff = Math.max(beatCutOff,BEAT_MIN);
+  			}
+  		}
     }
+    //  console.log(level);
     function render() {
       requestAnimationFrame(render);
       //if (!play) return;
-        camera.position.set( 0, 0, 2+(120-level)/10);
-        cube.rotation.x += 0.1*(level/100);
-        cube.rotation.y += 0.1*(level/100);
+        camera.position.set( 0, 0, 2+(0.5-level)*10);
+        cube.rotation.x += 0.2*level;
+        cube.rotation.y += 0.2*level;
         renderer.render(scene, camera);
     }
     render();
